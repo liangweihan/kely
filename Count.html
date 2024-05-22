@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>資金配置計算器</title>
+    
+    <!-- 內部 CSS 樣式 -->
+    <style>
+        /* 基本頁面風格 */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 導覽列樣式 */
+        nav {
+            background-color: #2d2d2d;
+            color: #ffffff;
+            padding: 10px 0;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul li {
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #ffffff;
+            padding: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background-color: #404040;
+        }
+
+        /* 主要容器樣式 */
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 表單樣式 */
+        form {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            width: 200px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* 結果區域樣式 */
+        #resultData {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+
+        #resultData h3 {
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        #resultData p {
+            margin: 5px 0;
+            font-size: 16px;
+        }
+
+        #resultData span {
+            font-weight: bold;
+            color: #007bff;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 導覽列 -->
+    <nav>
+        <h1 style="text-align: center;">資金配置計算器</h1>
+        <ul>
+            <!-- 導覽列連結 -->
+            <li><a href="https://liangweihan.github.io/357/">357公式</a></li>
+            <li><a href="https://liangweihan.github.io/dividend/">歷年股利</a></li>
+            <li><a href="Kelly.html">凱利公式</a></li>
+            <!-- 可添加更多連結以指向其他頁面 -->
+        </ul>
+    </nav>
+
+    <div class="container">
+        <!-- 表單用於輸入資料 -->
+        <form id="countForm">
+            <label for="winCountInput">進場後賺錢出場的次數:</label>
+            <input type="text" id="winCountInput">
+            <br />
+            <label for="totalCountInput">總交易次數:</label>
+            <input type="text" id="totalCountInput">
+            <br />
+            <label for="totalProfitInput">總獲利:</label>
+            <input type="text" id="totalProfitInput">
+            <br />
+            <label for="totalLossInput">總虧損:</label>
+            <input type="text" id="totalLossInput">
+            <br />
+            <button type="button" id="calculate">計算</button>
+        </form>
+
+        <!-- 顯示計算結果 -->
+        <div id="resultData">
+            <h3>計算結果</h3>
+            <p>勝率: <span id="winRate"></span></p>
+            <p>敗率: <span id="lossRate"></span></p>
+            <p>賺賠比: <span id="profitLossRatio"></span></p>
+            <p>最佳資金配置比例: <span id="optimalAllocation"></span></p>
+        </div>
+    </div>
+
+    <!-- JavaScript 部分 -->
+    <script>
+        document.getElementById("calculate").addEventListener("click", function () {
+            var winCount = parseInt(document.getElementById("winCountInput").value);
+            var totalCount = parseInt(document.getElementById("totalCountInput").value);
+            var totalProfit = parseInt(document.getElementById("totalProfitInput").value);
+            var totalLoss = parseInt(document.getElementById("totalLossInput").value);
+
+            var winRate = winCount / totalCount;
+            var lossRate = 1 - winRate;
+            var avgProfit = totalProfit / totalCount;
+            var avgLoss = totalLoss / totalCount;
+            var profitLossRatio = avgProfit / avgLoss;
+            var optimalAllocation = winRate - (lossRate / profitLossRatio);
+
+            document.getElementById("winRate").innerText = winRate.toFixed(2);
+            document.getElementById("lossRate").innerText = lossRate.toFixed(2);
+            document.getElementById("profitLossRatio").innerText = profitLossRatio.toFixed(2);
+            document.getElementById("optimalAllocation").innerText = optimalAllocation.toFixed(2);
+        });
+    </script>
+</body>
+</html>
